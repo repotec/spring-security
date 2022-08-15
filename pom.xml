@@ -18,5 +18,11 @@
 		<module>security-in-memory</module>
 		<module>security-jdbc</module>
 		<module>security-jdbc-custom</module>
+		<module>security-standard-password-encoder</module>
+		<module>spring-bcrypt-password-encoder</module>
+		<module>bcrypt-password-encoder</module>
+		<module>dao-authentication-provider</module>
+		<module>custom-authentication-provider</module>
+		<module>cross-origin-resource-sharing</module>
 	</modules>
 </project>
