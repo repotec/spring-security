@@ -6,11 +6,17 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.NamedAttributeNode;
+import javax.persistence.NamedEntityGraph;
+import javax.persistence.NamedSubgraph;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "users")
+@NamedEntityGraph(name = "users-graph",
+attributeNodes = @NamedAttributeNode(value = "userRoles", subgraph = "role-subgraph"),
+			subgraphs = @NamedSubgraph(name = "role-subgraph", attributeNodes = @NamedAttributeNode("role")))
 public class User {
 	@Id
 	@Column(name = "user_id")
@@ -25,8 +31,8 @@ public class User {
 	@Column(name = "enabled")
 	private String enabled;
 	
-	@OneToMany(mappedBy="user", fetch = FetchType.EAGER)
-	private List<Role> roles;
+	@OneToMany(mappedBy="user", fetch = FetchType.LAZY)
+	private List<UserRole> userRoles;
 	
 	public int getUserId() {
 		return userId;
@@ -52,10 +58,10 @@ public class User {
 	public void setEnabled(String enabled) {
 		this.enabled = enabled;
 	}
-	public List<Role> getRoles() {
-		return roles;
+	public List<UserRole> getUserRoles() {
+		return userRoles;
 	}
-	public void setRoles(List<Role> roles) {
-		this.roles = roles;
+	public void setUserRoles(List<UserRole> userRoles) {
+		this.userRoles = userRoles;
 	}
 }

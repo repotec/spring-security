@@ -24,5 +24,8 @@
 		<module>dao-authentication-provider</module>
 		<module>custom-authentication-provider</module>
 		<module>cross-origin-resource-sharing</module>
+		<module>cross-site-request-forgery-token</module>
+		<module>security-authorities</module>
+		<module>custom-filter</module>
 	</modules>
 </project>

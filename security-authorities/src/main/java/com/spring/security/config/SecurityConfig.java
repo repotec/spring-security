@@ -2,6 +2,8 @@ package com.spring.security.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
@@ -14,7 +16,7 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain getSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.authorizeHttpRequests((auth) ->{
-			auth.antMatchers("/account").authenticated();
+			auth.antMatchers(HttpMethod.POST, "/account").authenticated();
 			auth.antMatchers("/about").permitAll();
 			auth.antMatchers("/h2-console/**").permitAll();
 		}).httpBasic(Customizer.withDefaults());

@@ -21,14 +21,19 @@ public class SecurityConfig {
 	public SecurityFilterChain config (HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 		.cors().configurationSource(corsConfigurationSource())
-		.and().csrf().disable()
+		.and()
+		.csrf().ignoringAntMatchers("/card/**")
+			   .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+		.and()
         .authorizeHttpRequests((auth)->{
 			auth.antMatchers("/account").authenticated();
 			auth.antMatchers("/balance").authenticated();
+			auth.antMatchers("/notice").authenticated();
 			auth.antMatchers("/h2-console/**").permitAll();
 			auth.antMatchers("/about/**").permitAll();
 			auth.antMatchers("/about/new").permitAll();
 			auth.antMatchers("/contact/**").permitAll();
+			auth.antMatchers("/card/**").permitAll();
 		}).httpBasic(Customizer.withDefaults());
 		
 		return httpSecurity.build();
@@ -56,5 +61,3 @@ public class SecurityConfig {
 		return new BCryptPasswordEncoder();
 	}
 }
-
-//https://github.com/eazybytes/spring-security/blob/main/section6/springsecsection6latest/src/main/java/com/eazybytes/config/ProjectSecurityConfig.java

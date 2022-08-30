@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
-import com.spring.security.model.Role;
 import com.spring.security.model.User;
 import com.spring.security.repository.UserRepository;
 
@@ -36,12 +35,14 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 		Optional<User> user = userRepository.findByUsername(username);
 		
 		if(user.isPresent()) {
-			boolean exists = passwardEncoder.matches(password, user.get().getPassword());
+			boolean exists = password.equals(user.get().getPassword());
 			if(exists) {
 				List<GrantedAuthority> authorizes = new ArrayList<GrantedAuthority>();
 				
-				List<Role> roles = user.get().getRoles();
-				roles.stream().forEach((role) -> authorizes.add(new SimpleGrantedAuthority(role.getRole())));
+				user.get()
+					.getUserRoles()
+					.stream()
+					.forEach((role) -> authorizes.add(new SimpleGrantedAuthority(role.getRole().getRoleName())));
 				
 				return new UsernamePasswordAuthenticationToken(username, password, authorizes);
 			}else {

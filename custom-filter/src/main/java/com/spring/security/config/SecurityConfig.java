@@ -7,23 +7,27 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import com.spring.security.filter.CustomBeforeRequestFilter;
 
 @Configuration
 public class SecurityConfig {
-
 	@Bean
-	public SecurityFilterChain getSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
-		httpSecurity.authorizeHttpRequests((auth) ->{
+	public SecurityFilterChain config (HttpSecurity httpSecurity) throws Exception {
+		httpSecurity
+		.cors().disable()
+		.addFilterBefore(new CustomBeforeRequestFilter(), BasicAuthenticationFilter.class)
+        .authorizeHttpRequests((auth)->{
 			auth.antMatchers("/account").authenticated();
-			auth.antMatchers("/about").permitAll();
 			auth.antMatchers("/h2-console/**").permitAll();
 		}).httpBasic(Customizer.withDefaults());
 		
 		return httpSecurity.build();
 	}
 	
-	@Bean("passwordEncoder")
-	public PasswordEncoder getPasswordEncoder() {
+	@Bean
+	public PasswordEncoder passwordEncoder() {
 		return NoOpPasswordEncoder.getInstance();
 	}
 }

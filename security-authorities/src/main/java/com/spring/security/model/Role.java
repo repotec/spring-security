@@ -3,8 +3,6 @@ package com.spring.security.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -16,10 +14,6 @@ public class Role {
 	
 	@Column(name = "role_name")
 	private String roleName;
-	
-	@OneToOne
-	@JoinColumn(name="user_id")
-	private User user;
 	
 	public int getRoleId() {
 		return roleId;
