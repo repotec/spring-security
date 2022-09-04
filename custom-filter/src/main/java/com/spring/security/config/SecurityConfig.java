@@ -9,7 +9,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
-import com.spring.security.filter.CustomBeforeRequestFilter;
+import com.spring.security.filter.AfterLoginFilter;
+import com.spring.security.filter.AuthenticationProgressFilter;
+import com.spring.security.filter.BeforeRequestFilter;
 
 @Configuration
 public class SecurityConfig {
@@ -17,7 +19,9 @@ public class SecurityConfig {
 	public SecurityFilterChain config (HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
 		.cors().disable()
-		.addFilterBefore(new CustomBeforeRequestFilter(), BasicAuthenticationFilter.class)
+		.addFilterBefore(new BeforeRequestFilter(), BasicAuthenticationFilter.class)
+		.addFilterAfter(new AfterLoginFilter(), BasicAuthenticationFilter.class)
+		.addFilterAt(new AuthenticationProgressFilter(), BasicAuthenticationFilter.class)
         .authorizeHttpRequests((auth)->{
 			auth.antMatchers("/account").authenticated();
 			auth.antMatchers("/h2-console/**").permitAll();

@@ -30,7 +30,6 @@ public class SecurityConfig {
 	
 	@Bean
 	public UserDetailsService getUserDetailsService(DataSource datasource) throws SQLException {
-		System.out.println(datasource.getConnection());
 		return new JdbcUserDetailsManager(datasource);
 	}
 	

@@ -28,4 +28,22 @@ public class CustomUserDetailsService implements UserDetailsService {
 			throw new UsernameNotFoundException("Username Not Found Exception");
 		}
 	}
+	
+//in case of you don't want to implement userDetails interface in your project, you can just userdetails.User 
+//	@Override
+//	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
+//		Optional<Customer> customer = customerRepository.findByEmail(email);
+//		
+//		if(customer.isPresent()) {
+//			return new org.springframework.security.core.userdetails.User(customer.get().getEmail(), 
+//					customer.get().getPassword(), 
+//					customer.get().getEnabled().equals("1"),
+//					true,
+//					true,
+//					true,
+//					null);
+//		}else {
+//			throw new UsernameNotFoundException("Username Not Found Exception");
+//		}
+//	}
 }

@@ -27,5 +27,6 @@
 		<module>cross-site-request-forgery-token</module>
 		<module>security-authorities</module>
 		<module>custom-filter</module>
+		<module>jwt</module>
 	</modules>
 </project>

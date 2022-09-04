@@ -19,7 +19,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.util.StringUtils;
 
 
-public class CustomBeforeRequestFilter implements Filter {
+public class BeforeRequestFilter implements Filter {
 
 	private Charset credentialsCharset = StandardCharsets.UTF_8;
 
