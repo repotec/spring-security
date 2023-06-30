@@ -17,7 +17,7 @@ public class SecurityConfig {
 	@Bean("securityFilterChain")
 	public SecurityFilterChain getSecurityFilterChain(HttpSecurity httpSecurity) throws Exception {
 		httpSecurity.authorizeHttpRequests((auth)->{
-				auth.antMatchers("/account").authenticated();
+				auth.antMatchers("/account").hasRole("ADMIN");
 				auth.antMatchers("/about").permitAll();
 		}).httpBasic(Customizer.withDefaults());
 		
@@ -28,8 +28,8 @@ public class SecurityConfig {
 	public InMemoryUserDetailsManager getUserDetailsService() {
 		InMemoryUserDetailsManager userDetailsService = new InMemoryUserDetailsManager();
 		
-		UserDetails admin = User.withUsername("admin").password("admin").authorities("admin").build();
-		UserDetails guest = User.withUsername("guest").password("guest").authorities("guest").build();
+		UserDetails admin = User.withUsername("admin").password("admin").roles("ROLE_ADMIN").build();
+		UserDetails guest = User.withUsername("guest").password("admin").roles("ROLE_GUEST").build();
 		
 		userDetailsService.createUser(admin);
 		userDetailsService.createUser(guest);

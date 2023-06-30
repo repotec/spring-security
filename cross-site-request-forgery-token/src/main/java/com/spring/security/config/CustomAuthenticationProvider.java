@@ -1,4 +1,4 @@
-package com.spring.security.condig;
+package com.spring.security.config;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +29,9 @@ public class CustomAuthenticationProvider implements AuthenticationProvider{
 	@Autowired
 	PasswordEncoder passwardEncoder;
 	
+	/**
+	 * below method will be executed even before login endpoint
+	 */
 	@Override
 	public Authentication authenticate(Authentication authentication) throws AuthenticationException {
 		String username = authentication.getName();

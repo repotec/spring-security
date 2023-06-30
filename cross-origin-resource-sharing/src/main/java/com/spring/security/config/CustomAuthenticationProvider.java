@@ -1,4 +1,4 @@
-package com.spring.security.condig;
+package com.spring.security.config;
 
 import java.util.ArrayList;
 import java.util.List;

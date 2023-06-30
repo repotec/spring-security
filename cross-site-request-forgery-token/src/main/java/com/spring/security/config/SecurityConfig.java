@@ -1,4 +1,4 @@
-package com.spring.security.condig;
+package com.spring.security.config;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -29,11 +29,13 @@ public class SecurityConfig {
 			auth.antMatchers("/account").authenticated();
 			auth.antMatchers("/balance").authenticated();
 			auth.antMatchers("/notice").authenticated();
+			
 			auth.antMatchers("/h2-console/**").permitAll();
 			auth.antMatchers("/about/**").permitAll();
 			auth.antMatchers("/about/new").permitAll();
 			auth.antMatchers("/contact/**").permitAll();
 			auth.antMatchers("/card/**").permitAll();
+			auth.antMatchers("/login").permitAll();
 		}).httpBasic(Customizer.withDefaults());
 		
 		return httpSecurity.build();

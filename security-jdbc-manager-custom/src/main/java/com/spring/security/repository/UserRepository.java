@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.spring.security.model.User;
 
 @Repository
-public interface CustomerRepository extends CrudRepository<User, Integer> {
+public interface UserRepository extends CrudRepository<User, Integer> {
 	@EntityGraph(type = EntityGraph.EntityGraphType.FETCH, value = "users-graph")
 	Optional<User> findByUsername(String email);
 }

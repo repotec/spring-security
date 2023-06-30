@@ -5,6 +5,7 @@ import java.util.Collections;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -24,17 +25,22 @@ public class SecurityConfig {
 	@Bean
 	public SecurityFilterChain config (HttpSecurity httpSecurity) throws Exception {
 		httpSecurity
-		.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-		.and()
 		.cors().configurationSource(corsConfigurationSource())
 		.and()
 		.csrf().disable()
+
 		.addFilterBefore(new JwtValidatorFilter(), BasicAuthenticationFilter.class)
 		.addFilterAfter(new JwtGeneratorFilter(), BasicAuthenticationFilter.class)
         .authorizeHttpRequests((auth)->{
 			auth.antMatchers("/account").authenticated();
 			auth.antMatchers("/h2-console/**").permitAll();
-		}).httpBasic(Customizer.withDefaults());
+			auth.antMatchers(HttpMethod.POST, "/about").permitAll();
+			
+			auth.anyRequest().authenticated();
+		}).httpBasic(Customizer.withDefaults())
+        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+        .and()
+		.headers().frameOptions().disable();
 		
 		return httpSecurity.build();
 	}
